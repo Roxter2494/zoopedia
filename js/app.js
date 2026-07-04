@@ -17,14 +17,6 @@ function iniciarAplicacion() {
 
     mostrarInicio();
 
-    if (typeof inicializarBuscador === "function") {
-        inicializarBuscador();
-    }
-
-    if (typeof inicializarFavoritos === "function") {
-        inicializarFavoritos();
-    }
-
     inicializarModoOscuro();
 
     inicializarBotonArriba();
@@ -48,9 +40,9 @@ function inicializarEventos() {
         btnInformacion.addEventListener("click", mostrarInformacion);
     }
 
-    const btnGlosario = document.getElementById("btnGlosario");
-    if (btnGlosario && typeof mostrarGlosario === "function") {
-        btnGlosario.addEventListener("click", mostrarGlosario);
+    const btnFAQ = document.getElementById("btnFAQ");
+    if (btnFAQ) {
+        btnFAQ.addEventListener("click", mostrarPreguntas);
     }
 
 }
@@ -70,28 +62,32 @@ function mostrarInicio() {
 
             <p>
                 Bienvenido.
-                Selecciona un animal desde el menú lateral
-                o utiliza el buscador para comenzar.
+                Selecciona un animal desde el menú para comenzar.
             </p>
-
-            <div id="estadisticas"></div>
-
-            <div id="accesosRapidos"></div>
 
         </section>
 
     `;
-
-    if (typeof crearEstadisticas === "function") {
-        crearEstadisticas();
-    }
-
-    if (typeof crearAccesosRapidos === "function") {
-        crearAccesosRapidos();
-    }
-
 }
 
+function mostrarPreguntas() {
+
+    const vista = document.getElementById("vista");
+
+    vista.innerHTML = `
+
+        <section class="preguntas">
+
+            <h1>${preguntas.titulo}</h1>
+
+            <p>
+xd
+            </p>
+
+        </section>
+
+    `;
+}
 /**
  * Muestra los botones definidos en datos.js
  */
@@ -223,7 +219,7 @@ function abrirRaza(idAnimal, idCategoria, idRaza) {
     const animal = informacion.botones.find(a => a.id === idAnimal);
     if (!animal) return;
 
-    const categoria = animal.botones.find(b => b.id === idCategoria);
+    const categoria = animal.botones.find(c => c.id === idCategoria);
     if (!categoria) return;
 
     const raza = categoria.botones.find(r => r.id === idRaza);
@@ -231,49 +227,89 @@ function abrirRaza(idAnimal, idCategoria, idRaza) {
 
     const f = raza.ficha;
 
-    const imagen = f.imagen 
+    const imagen = f.imagen
         ? `<img src="${f.imagen}" alt="${raza.nombre}" class="img-raza">`
         : `<div class="no-img">📷 Sin imagen disponible</div>`;
 
+    const clasificacion = f.clasificacion_taxonomica
+        ? `
+        <ul>
+            <li><strong>Reino:</strong> ${f.clasificacion_taxonomica.reino ?? "-"}</li>
+            <li><strong>Filo:</strong> ${f.clasificacion_taxonomica.filo ?? "-"}</li>
+            <li><strong>Clase:</strong> ${f.clasificacion_taxonomica.clase ?? "-"}</li>
+            <li><strong>Orden:</strong> ${f.clasificacion_taxonomica.orden ?? "-"}</li>
+            <li><strong>Familia:</strong> ${f.clasificacion_taxonomica.familia ?? "-"}</li>
+            <li><strong>Género:</strong> ${f.clasificacion_taxonomica.genero ?? "-"}</li>
+            <li><strong>Especie:</strong> ${f.clasificacion_taxonomica.especie ?? "-"}</li>
+        </ul>
+        `
+        : "<p>No disponible</p>";
+
+    const alimentacion = Array.isArray(f.alimentacion)
+        ? `<ul>${f.alimentacion.map(a => `<li>${a}</li>`).join("")}</ul>`
+        : `<p>${f.alimentacion ?? "No disponible"}</p>`;
+
+    const usos = Array.isArray(f.usos_principales)
+        ? `<ul>${f.usos_principales.map(u => `<li>${u}</li>`).join("")}</ul>`
+        : `<p>${f.usos_principales ?? "No disponible"}</p>`;
+
     vista.innerHTML = `
-        <section class="ficha">
+    <section class="ficha">
 
-            <h1>${raza.nombre}</h1>
+        <h1>${raza.nombre}</h1>
 
-            ${imagen}
+        ${imagen}
 
-            <h2>📖 Información general</h2>
-            <p>${f.descripcion ?? "No disponible"}</p>
+        <h2>📖 Descripción</h2>
+        <p>${f.descripcion ?? "No disponible"}</p>
 
-            <h2>🌍 Origen</h2>
-            <p>${f.origen ?? "No disponible"}</p>
+        <h2>📜 Historia</h2>
+        <p>${f.historia ?? "No disponible"}</p>
 
-            <h2>⚖️ Peso</h2>
-            <ul>
-                <li>Machos: ${f.peso_machos ?? "-"}</li>
-                <li>Hembras: ${f.peso_hembras ?? "-"}</li>
-            </ul>
+        <h2>🌍 Origen</h2>
+        <p>${f.origen ?? "No disponible"}</p>
 
-            <h2>🐄 Especie</h2>
-            <p>${f.especie ?? "-"}</p>
+        <h2>🐄 Especie</h2>
+        <p>${f.especie ?? "No disponible"}</p>
 
-            <h2>🥩 Producción</h2>
-            <p>${f.cantidad_de_produccion ?? "-"}</p>
+        <h2>🧬 Nombre científico</h2>
+        <p><i>${f.nombre_cientifico ?? "No disponible"}</i></p>
 
-            <h2>🌿 Alimentación</h2>
-            <p>${(f.alimentacion ?? []).join(", ")}</p>
+        <h2>🧾 Clasificación taxonómica</h2>
+        ${clasificacion}
 
-            <h2>🧠 Manejo</h2>
-            <p>${f.manejo ?? "-"}</p>
+        <h2>⚖️ Peso</h2>
+        <ul>
+            <li><strong>Machos:</strong> ${f.peso_machos ?? "-"}</li>
+            <li><strong>Hembras:</strong> ${f.peso_hembras ?? "-"}</li>
+        </ul>
 
-            <h2>😌 Temperamento</h2>
-            <p>${f.temperamento ?? "-"}</p>
+        <h2>🥩 Producción</h2>
+        <p>${f.cantidad_de_produccion ?? "No disponible"}</p>
 
-            <button onclick="abrirBoton('${idAnimal}','${idCategoria}')">
-                ← Volver
-            </button>
+        <h2>⏳ Esperanza de vida</h2>
+        <p>${f.esperanza_de_vida ?? "No disponible"}</p>
 
-        </section>
+        <h2>🤰 Período de gestación</h2>
+        <p>${f.periodo_gestacion ?? "No disponible"}</p>
+
+        <h2>🎯 Usos principales</h2>
+        ${usos}
+
+        <h2>🌿 Alimentación</h2>
+        ${alimentacion}
+
+        <h2>🧑‍🌾 Manejo</h2>
+        <p>${f.manejo ?? "No disponible"}</p>
+
+        <h2>😌 Temperamento</h2>
+        <p>${f.temperamento ?? "No disponible"}</p>
+
+        <button onclick="abrirBoton('${idAnimal}','${idCategoria}')">
+            ← Volver
+        </button>
+
+    </section>
     `;
 }
 

@@ -1,6 +1,6 @@
 {
-  "name": "Enciclopedia Zootécnica",
-  "short_name": "ZooDB",
+  "name": "Zoopedia",
+  "short_name": "Zoo",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#0b1f14",
