@@ -1,0 +1,173 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0b1f14; /* verde selva oscuro */
+    color: #e8f5e9;
+}
+
+/* layout principal */
+.app {
+    display: flex;
+    height: 100vh;
+}
+
+/* sidebar tipo zoológico / administración */
+.sidebar {
+    width: 260px;
+    background: #102a1c; /* bosque profundo */
+    padding: 15px;
+    overflow-y: auto;
+    border-right: 2px solid #1f4d35;
+}
+
+.sidebar h2 {
+    color: #4ade80; /* verde zoológico */
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+/* botones tipo registros de animales */
+.sidebar button {
+    width: 100%;
+    margin: 5px 0;
+    padding: 10px;
+    background: #163826;
+    border: 1px solid #1f4d35;
+    color: #e8f5e9;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: 0.2s;
+}
+
+/* hover más “natural” */
+.sidebar button:hover {
+    background: #4ade80;
+    color: #0b1f14;
+    transform: translateX(3px);
+}
+
+/* área principal */
+.main {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+/* ficha estilo ficha de zoológico */
+.ficha {
+    animation: loadPanel 0.3s ease;
+}
+
+@keyframes loadPanel {
+    from {
+        opacity: 0;
+        transform: scale(0.98);
+        filter: blur(2px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0);
+    }
+}
+
+/* título animal */
+.ficha h1 {
+    color: #4ade80;
+    margin-top: 4px;
+    margin-bottom: 10px;
+    text-shadow: 0 0 6px rgba(74, 222, 128, 0.3);
+}
+
+/* subtítulos tipo registro científico */
+.ficha h2 {
+    color: #a7f3d0;
+    font-size: 18px;
+    margin-top: 15px;
+    border-left: 3px solid #4ade80;
+    padding-left: 8px;
+}
+
+/* grid de datos tipo base de datos */
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+/* tarjetas de información */
+.card {
+    background: #0b1f14;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #1f4d35;
+}
+
+/* etiquetas del sistema */
+.label {
+    color: #4ade80;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* efecto “institución zoológica” */
+.ficha::before {
+    content: "SISTEMA DE DATOS ZOOTECNISTA";
+    display: block;
+    font-size: 20px;
+    color: #4ade80;
+    opacity: 0.6;
+    letter-spacing: 2px;
+    margin-top: 20px;
+    margin-bottom: 0px;
+    line-height: 1;
+}
+/* Imagen estilo CRT */
+.img-raza {
+    width: 100%;
+    max-width: 400px;
+    height: 250px;
+    object-fit: cover;
+    border: 1px solid #00ff66;
+    box-shadow: 0 0 10px #00ff66;
+    filter: contrast(1.2) brightness(0.9);
+}
+
+/* Placeholder sin imagen */
+.no-img {
+    width: 100%;
+    max-width: 400px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    border: 1px dashed #00ff66;
+    color: #00ff66;
+}
+button {
+    background: transparent;
+    border: none;
+    outline: 1px solid #00ff00;
+    font-family: inherit;
+    color: inherit;
+}
+.sidebar button {
+    width: 100%;
+    margin: 5px 0;
+    padding: 10px;
+    background: #163826;
+    border: 1px solid #1f4d35;
+    color: #e8f5e9;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: 0.2s;
+}
+.sidebar button {
+    opacity: 0;
+    transform: translateX(-10px);
+    animation: aparecerBtn 0.4s ease forwards;
+}
