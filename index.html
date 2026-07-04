@@ -9,9 +9,32 @@
     <title>Enciclopedia de Zootecnia</title>
 
     <link rel="stylesheet" href="css/estilos.css">
+    <meta name="theme-color" content="#0b1f14">
+
+    <link rel="manifest" href="manifest.json">
+
+    <link rel="apple-touch-icon" href="icon-192.png">
 
 </head>
+<script>
 
+if("serviceWorker" in navigator){
+
+    window.addEventListener("load",()=>{
+
+        navigator.serviceWorker.register("./service-worker.js")
+
+        .then(()=>{
+
+            console.log("PWA instalada correctamente");
+
+        });
+
+    });
+
+}
+
+</script>
 <body>
 
     <!-- ================= LOADER ================= -->
@@ -134,3 +157,12 @@ if ("serviceWorker" in navigator) {
 
 }
 </script>
+<div id="loader">
+
+    <img src="icon-192.png">
+
+    <h2>Enciclopedia Zootécnica</h2>
+
+    <p>Cargando base de datos...</p>
+
+</div>
